@@ -1,0 +1,1632 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AADONA | Complete IT solution under one Indian brand name</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0f0f23 0%, #1a1a3a 50%, #2d1b69 100%);
+            color: white;
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        /* Animated Background */
+        .bg-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .particle {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            animation: float 8s infinite linear;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        .geometric-shape {
+            position: absolute;
+            border: 1px solid rgba(78, 205, 196, 0.3);
+            animation: rotate 20s linear infinite;
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        /* Header */
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(15, 15, 35, 0.95);
+            backdrop-filter: blur(15px);
+            z-index: 1000;
+            padding: 1rem 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .logo {
+            font-size: 2.5rem;
+            font-weight: bold;
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4, #45b7d1);
+            background-size: 200% 200%;
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: gradient-flow 3s ease infinite;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .logo-img {
+            width: 60px;
+            height: 60px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            border: 2px solid rgba(78, 205, 196, 0.3);
+        }
+
+        /* Image placeholders */
+        .img-placeholder {
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px dashed rgba(78, 205, 196, 0.5);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #4ecdc4;
+            font-size: 0.9rem;
+            text-align: center;
+            padding: 1rem;
+        }
+
+        .customer-logos {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+
+        .customer-logo {
+            width: 150px;
+            height: 100px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .customer-logo:hover {
+            transform: scale(1.05);
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        @keyframes gradient-flow {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            position: relative;
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .nav-links a:hover {
+            background: rgba(78, 205, 196, 0.2);
+            transform: translateY(-2px);
+        }
+
+        /* Pages */
+        .page {
+            display: none;
+            min-height: 100vh;
+            padding-top: 100px;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        .page-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 90vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            position: relative;
+            background: radial-gradient(circle at center, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+        }
+
+        .hero-content {
+            max-width: 800px;
+            padding: 2rem;
+            animation: fadeInUp 1s ease-out;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero h1 {
+            font-size: 4.5rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4, #45b7d1, #96ceb4);
+            background-size: 400% 400%;
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: gradient-shift 4s ease infinite;
+        }
+
+        @keyframes gradient-shift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        .tagline {
+            font-size: 1.8rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+            animation: fadeIn 2s ease-out 0.5s both;
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            margin-bottom: 3rem;
+            color: #4ecdc4;
+            animation: fadeIn 2s ease-out 1s both;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            animation: fadeIn 2s ease-out 1.5s both;
+        }
+
+        .btn {
+            padding: 1rem 2.5rem;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-primary {
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+            color: white;
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: white;
+            border: 2px solid rgba(78, 205, 196, 0.5);
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Stats Section */
+        .stats-section {
+            padding: 4rem 0;
+            background: rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(10px);
+            margin: 3rem 0;
+            border-radius: 30px;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .stat-card {
+            text-align: center;
+            padding: 2rem;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px) scale(1.05);
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .stat-number {
+            font-size: 3rem;
+            font-weight: bold;
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            font-size: 1.1rem;
+            opacity: 0.8;
+        }
+
+        /* Section Titles */
+        .section-title {
+            font-size: 3rem;
+            text-align: center;
+            margin-bottom: 3rem;
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 3px;
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+            border-radius: 2px;
+        }
+
+        /* Products Grid */
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .product-card {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 2rem;
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+        }
+
+        .product-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            transform: rotate(45deg);
+            transition: all 0.6s ease;
+            opacity: 0;
+        }
+
+        .product-card:hover::before {
+            animation: shimmer 1.5s ease;
+        }
+
+        @keyframes shimmer {
+            0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); opacity: 0; }
+            50% { opacity: 1; }
+            100% { transform: translateX(100%) translateY(100%) rotate(45deg); opacity: 0; }
+        }
+
+        .product-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .product-icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            display: block;
+            text-align: center;
+            animation: pulse 3s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        .product-card h3 {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            color: #4ecdc4;
+            text-align: center;
+        }
+
+        .product-features {
+            list-style: none;
+            margin-top: 1rem;
+        }
+
+        .product-features li {
+            padding: 0.5rem 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            position: relative;
+            padding-left: 1.5rem;
+        }
+
+        .product-features li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: #4ecdc4;
+            font-weight: bold;
+        }
+
+        /* About Section */
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+            margin: 3rem 0;
+        }
+
+        .about-text {
+            animation: slideInLeft 1s ease-out;
+        }
+
+        @keyframes slideInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .about-visual {
+            position: relative;
+            height: 400px;
+            animation: slideInRight 1s ease-out;
+        }
+
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        /* Verticals Grid */
+        .verticals-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-top: 3rem;
+        }
+
+        .vertical-item {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 1.5rem;
+            border-radius: 15px;
+            text-align: center;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .vertical-item:hover {
+            background: rgba(78, 205, 196, 0.2);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Certifications */
+        .certifications-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+            text-align: center;
+        }
+
+        .cert-item {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 2rem;
+            border-radius: 20px;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .cert-item:hover {
+            transform: scale(1.05);
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .cert-logo {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+            border-radius: 15px;
+            margin: 0 auto 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            animation: rotate-slow 8s linear infinite;
+        }
+
+        @keyframes rotate-slow {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        /* Product Detail Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 2000;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .modal-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: linear-gradient(135deg, #1a1a3a, #2d1b69);
+            padding: 3rem;
+            border-radius: 20px;
+            max-width: 800px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 2rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .close-modal:hover {
+            color: #ff6b6b;
+            transform: scale(1.2);
+        }
+
+        /* Footer */
+        footer {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 3rem 2rem 2rem;
+            backdrop-filter: blur(10px);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            margin-top: 4rem;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .contact-item {
+            padding: 1.5rem;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            transition: all 0.3s ease;
+        }
+
+        .contact-item:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateY(-3px);
+        }
+
+        /* Mobile Menu */
+        .mobile-menu-btn {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            padding: 0.5rem;
+        }
+
+        .mobile-menu-btn span {
+            width: 25px;
+            height: 3px;
+            background: white;
+            margin: 3px 0;
+            transition: 0.3s;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-links { 
+                display: none; 
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background: rgba(15, 15, 35, 0.95);
+                flex-direction: column;
+                padding: 2rem;
+            }
+
+            .nav-links.active { 
+                display: flex; 
+            }
+
+            .mobile-menu-btn { 
+                display: flex; 
+            }
+
+            .hero h1 { font-size: 2.5rem; }
+            .tagline { font-size: 1.3rem; }
+            .about-grid { grid-template-columns: 1fr; }
+            .products-grid { grid-template-columns: 1fr; }
+            .modal-content { padding: 2rem; }
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+            border-radius: 5px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(45deg, #4ecdc4, #ff6b6b);
+        }
+
+        /* Loading Animation */
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: #4ecdc4;
+            animation: spin 1s ease-in-out infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Page Transition */
+        .page-transition {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.5s ease;
+        }
+
+        .page-transition.loaded {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+    <!-- Animated Background -->
+    <div class="bg-animation">
+        <!-- Particles will be generated by JavaScript -->
+    </div>
+
+    <!-- Header -->
+    <header>
+        <nav>
+            <div class="logo" onclick="showPage('home')">
+                <!-- Replace this with original AADONA logo -->
+                <div class="logo-img">🏢</div>
+                AADONA
+            </div>
+            <div class="mobile-menu-btn" onclick="toggleMobileMenu()">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <ul class="nav-links" id="navLinks">
+                <li><a onclick="showPage('home')">Home</a></li>
+                <li><a onclick="showPage('active-solutions')">Active Solutions</a></li>
+                <li><a onclick="showPage('passive-solutions')">Passive Solutions</a></li>
+                <li><a onclick="showPage('about')">About</a></li>
+                <li><a onclick="showPage('verticals')">Verticals</a></li>
+                <li><a onclick="showPage('contact')">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Home Page -->
+    <div class="page active" id="home">
+        <section class="hero">
+            <div class="hero-content">
+                <h1>AADONA</h1>
+                <p class="tagline">Complete IT solution under one Indian brand name</p>
+                <p class="subtitle">Truly Indian Brand for Bharat</p>
+                <p style="font-size: 1.1rem; margin-bottom: 2rem; opacity: 0.8;">AADONA: Transforming IT Solutions with Integrity, Innovation, and Customer-Centric Values - Join Our Journey Towards Excellence!</p>
+                <div class="cta-buttons">
+                    <button class="btn btn-primary" onclick="showPage('active-solutions')">Explore Active Solutions</button>
+                    <button class="btn btn-secondary" onclick="showPage('passive-solutions')">View Passive Solutions</button>
+                </div>
+            </div>
+        </section>
+
+        <div class="stats-section">
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <span class="stat-number" data-target="1000">0</span>
+                    <span class="stat-label">Happy Customers</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-number" data-target="600">0</span>
+                    <span class="stat-label">Products</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-number" data-target="500">0</span>
+                    <span class="stat-label">Happy Partners</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-number" data-target="7">0</span>
+                    <span class="stat-label">Years Experience</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Active Solutions Page -->
+    <div class="page" id="active-solutions">
+        <div class="page-content page-transition">
+            <h1 class="section-title">Active Networking Solutions</h1>
+            <p style="text-align: center; font-size: 1.3rem; margin-bottom: 3rem; color: #4ecdc4;">AADONA offers end to end premium quality Active networking products, products are Made in India (MII) Class-1 and Class-2</p>
+            
+            <div class="products-grid">
+                <div class="product-card" onclick="openProductModal('wireless')">
+                    <div class="product-icon">📡</div>
+                    <h3>Wireless Solutions</h3>
+                    <p>APOLLO Series - High-performance, cost-effective WiFi solutions for diverse environments</p>
+                    <ul class="product-features">
+                        <li>Enterprise-grade WiFi 6 technology</li>
+                        <li>Seamless roaming capabilities</li>
+                        <li>Advanced security protocols</li>
+                        <li>Cloud-based management</li>
+                    </ul>
+                </div>
+
+                <div class="product-card" onclick="openProductModal('switches')">
+                    <div class="product-icon">🔌</div>
+                    <h3>Network Switches</h3>
+                    <p>Comprehensive range from unmanaged to data centre switches</p>
+                    <ul class="product-features">
+                        <li>Layer 2/3 switching capabilities</li>
+                        <li>PoE+ support</li>
+                        <li>VLAN management</li>
+                        <li>QoS prioritization</li>
+                    </ul>
+                </div>
+
+                <div class="product-card" onclick="openProductModal('firewall')">
+                    <div class="product-icon">🛡️</div>
+                    <h3>Firewall & UTM</h3>
+                    <p>Advanced security appliances for comprehensive network protection</p>
+                    <ul class="product-features">
+                        <li>Next-generation firewall</li>
+                        <li>Intrusion prevention system</li>
+                        <li>VPN connectivity</li>
+                        <li>Web filtering</li>
+                    </ul>
+                </div>
+
+                <div class="product-card" onclick="openProductModal('servers')">
+                    <div class="product-icon">🖥️</div>
+                    <h3>Servers & Workstations</h3>
+                    <p>High-performance computing solutions for enterprise needs</p>
+                    <ul class="product-features">
+                        <li>Rack and tower servers</li>
+                        <li>Virtualization support</li>
+                        <li>Hot-swappable components</li>
+                        <li>Enterprise warranties</li>
+                    </ul>
+                </div>
+
+                <div class="product-card" onclick="openProductModal('nas')">
+                    <div class="product-icon">💾</div>
+                    <h3>Network Attached Storage</h3>
+                    <p>Scalable storage solutions for data management and backup</p>
+                    <ul class="product-features">
+                        <li>RAID configurations</li>
+                        <li>Remote access</li>
+                        <li>Automatic backup</li>
+                        <li>Multi-user support</li>
+                    </ul>
+                </div>
+
+                <div class="product-card" onclick="openProductModal('industrial')">
+                    <div class="product-icon">⚙️</div>
+                    <h3>Industrial Switches</h3>
+                    <p>Ruggedized networking equipment for harsh environments</p>
+                    <ul class="product-features">
+                        <li>Extended temperature range</li>
+                        <li>DIN rail mounting</li>
+                        <li>Industrial protocols</li>
+                        <li>Redundant power</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Passive Solutions Page -->
+    <div class="page" id="passive-solutions">
+        <div class="page-content page-transition">
+            <h1 class="section-title">Passive Networking Solutions</h1>
+            <p style="text-align: center; font-size: 1.3rem; margin-bottom: 3rem; color: #4ecdc4;">Complete range of passive networking infrastructure products for reliable connectivity</p>
+            
+            <div class="products-grid">
+                <div class="product-card" onclick="openProductModal('cabling')">
+                    <div class="product-icon">🔌</div>
+                    <h3>Structured Cabling</h3>
+                    <p>CAT6, CAT6A cables and connectivity solutions</p>
+                    <ul class="product-features">
+                        <li>Cat 6/6A UTP & STP cables</li>
+                        <li>Fiber optic cables</li>
+                        <li>Cable management systems</li>
+                        <li>Outdoor rated cables</li>
+                    </ul>
+                </div>
+
+                <div class="product-card" onclick="openProductModal('racks')">
+                    <div class="product-icon">🏗️</div>
+                    <h3>Network Racks</h3>
+                    <p>Professional server racks and accessories</p>
+                    <ul class="product-features">
+                        <li>19" standard racks</li>
+                        <li>Wall mount enclosures</li>
+                        <li>Cable management</li>
+                        <li>Cooling solutions</li>
+                    </ul>
+                </div>
+
+                <div class="product-card" onclick="openProductModal('patch-cords')">
+                    <div class="product-icon">🔗</div>
+                    <h3>Patch Cords</h3>
+                    <p>High-quality patch cables for network connections</p>
+                    <ul class="product-features">
+                        <li>CAT6/6A patch cords</li>
+                        <li>Fiber patch cables</li>
+                        <li>Custom lengths</li>
+                        <li>Boot protection</li>
+                    </ul>
+                </div>
+
+                <div class="product-card" onclick="openProductModal('panels')">
+                    <div class="product-icon">⚡</div>
+                    <h3>Patch Panels</h3>
+                    <p>Organized connectivity solutions for data centers</p>
+                    <ul class="product-features">
+                        <li>24/48 port configurations</li>
+                        <li>Keystone jack compatibility</li>
+                        <li>Cable management bar</li>
+                        <li>Shielded options available</li>
+                    </ul>
+                </div>
+
+                <div class="product-card" onclick="openProductModal('connectors')">
+                    <div class="product-icon">🔧</div>
+                    <h3>Connectors & Accessories</h3>
+                    <p>Professional grade connectors and termination accessories</p>
+                    <ul class="product-features">
+                        <li>RJ45 connectors</li>
+                        <li>Keystone jacks</li>
+                        <li>Cable boots & clips</li>
+                        <li>Testing equipment</li>
+                    </ul>
+                </div>
+
+                <div class="product-card" onclick="openProductModal('fiber-optic')">
+                    <div class="product-icon">💡</div>
+                    <h3>Fiber Optic Solutions</h3>
+                    <p>Complete fiber infrastructure components</p>
+                    <ul class="product-features">
+                        <li>Single & multi-mode fibers</li>
+                        <li>Fiber optic enclosures</li>
+                        <li>Splice trays</li>
+                        <li>Fiber adapters</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- About Page -->
+    <div class="page" id="about">
+        <div class="page-content page-transition">
+            <h1 class="section-title">About AADONA</h1>
+            
+            <div class="about-grid">
+                <div class="about-text">
+                    <h3 style="color: #4ecdc4; font-size: 2.5rem; margin-bottom: 2rem;">Innovation Meets Excellence</h3>
+                    <p style="font-size: 1.3rem; margin-bottom: 2rem;">AADONA was founded in 2018 under the Start-up India Initiative by three passionate technology enthusiasts who believe India has great potential and must have a premium networking technology brand of its own.</p>
+                    
+                    <p style="font-size: 1.1rem; margin-bottom: 1.5rem;">AADONA is registered under the Department of Industrial Policy and Promotion Govt. Of India, MSME, Udyam Akanksha, GeM Market Place and is ISO9001, ISO-10002, ISO-14001, ISO-27001 certified brand with registered trade mark.</p>
+                    
+                    <div style="margin: 2rem 0;">
+                        <h4 style="color: #ff6b6b; font-size: 1.8rem; margin-bottom: 1rem;">Our Mission</h4>
+                        <p>Ever since AADONA came into existence (2018) its agenda was to create a premium Indian networking technology brand. With great product offerings currently, AADONA offers MII (Made in India) products across different technologies, and each technology domain offers a wide range of options to choose from.</p>
+                    </div>
+                </div>
+                
+                <div class="about-visual">
+                    <div style="position: relative; height: 400px;">
+                        <div class="geometric-shape" style="width: 200px; height: 200px; top: 50%; left: 50%; transform: translate(-50%, -50%);"></div>
+                        <div class="geometric-shape" style="width: 150px; height: 150px; top: 30%; left: 30%; border-color: rgba(255, 107, 107, 0.3);"></div>
+                        <div class="geometric-shape" style="width: 100px; height: 100px; top: 70%; right: 20%; border-color: rgba(150, 206, 180, 0.3);"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div style="margin: 4rem 0;">
+                <h3 style="color: #4ecdc4; font-size: 2rem; margin-bottom: 2rem; text-align: center;">Our Customers</h3>
+                <div class="customer-logos">
+                    <div class="customer-logo img-placeholder">Customer Logo 1</div>
+                    <div class="customer-logo img-placeholder">Customer Logo 2</div>
+                    <div class="customer-logo img-placeholder">Customer Logo 3</div>
+                    <div class="customer-logo img-placeholder">Customer Logo 4</div>
+                    <div class="customer-logo img-placeholder">Customer Logo 5</div>
+                    <div class="customer-logo img-placeholder">Customer Logo 6</div>
+                    <div class="customer-logo img-placeholder">Customer Logo 7</div>
+                    <div class="customer-logo img-placeholder">Customer Logo 8</div>
+                </div>
+            </div>
+
+            <div style="margin: 4rem 0;">
+                <h3 style="color: #4ecdc4; font-size: 2rem; margin-bottom: 2rem; text-align: center;">Technologies We Offer</h3>
+                <p style="text-align: center; font-size: 1.2rem; margin-bottom: 3rem;">We offer a wide range of products from unmanaged switches to data centre switches, Industrial switches, UTM, NAS, Servers, workstations, and Wireless and IP Cameras. With our offering 90% of your networking needs can be addressed. We offer end-to-end solutions.</p>
+            </div>
+
+            <div class="certifications-grid">
+                <div class="cert-item">
+                    <div class="cert-logo">ISO</div>
+                    <h4>ISO Certified</h4>
+                    <p>9001, 10002, 14001, 27001</p>
+                </div>
+                <div class="cert-item">
+                    <div class="cert-logo">MII</div>
+                    <h4>Made in India</h4>
+                    <p>Class-1 & Class-2 Products</p>
+                </div>
+                <div class="cert-item">
+                    <div class="cert-logo">GeM</div>
+                    <h4>GeM Marketplace</h4>
+                    <p>Government e-Marketplace</p>
+                </div>
+                <div class="cert-item">
+                    <div class="cert-logo">SUI</div>
+                    <h4>Start-up India</h4>
+                    <p>Recognized Startup</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Verticals Page -->
+    <div class="page" id="verticals">
+        <div class="page-content page-transition">
+            <h1 class="section-title">Industry Verticals We Serve</h1>
+            <p style="text-align: center; font-size: 1.3rem; margin-bottom: 3rem; color: #4ecdc4;">AADONA provides specialized networking solutions across diverse industry sectors</p>
+            
+            <div class="verticals-grid">
+                <div class="vertical-item">
+                    <h3>🏭 Manufacturing</h3>
+                    <p>Industrial automation networks</p>
+                </div>
+                <div class="vertical-item">
+                    <h3>🏢 Corporate</h3>
+                    <p>Enterprise networking solutions</p>
+                </div>
+                <div class="vertical-item">
+                    <h3>⛏️ Mining</h3>
+                    <p>Ruggedized mining networks</p>
+                </div>
+                <div class="vertical-item">
+                    <h3>⛽ Oil & Gas</h3>
+                    <p>Hazardous area networking</p>
+                </div>
+                <div class="vertical-item">
+                    <h3>🏨 Hospitality</h3>
+                    <p>Guest and management networks</p>
+                </div>
+                <div class="vertical-item">
+                    <h3>🏙️ Smart City</h3>
+                    <p>Municipal IoT infrastructure</p>
+                </div>
+                <div class="vertical-item">
+                    <h3>🏥 Healthcare</h3>
+                    <p>Medical grade networking</p>
+                </div>
+                <div class="vertical-item">
+                    <h3>💾 Data Centre</h3>
+                    <p>High-density data center solutions</p>
+                </div>
+                <div class="vertical-item">
+                    <h3>🛒 Retail Chain</h3>
+                    <p>POS and inventory networks</p>
+                </div>
+                <div class="vertical-item">
+                    <h3>⚡ Power Sector</h3>
+                    <p>Utility grade networks</p>
+                </div>
+                <div class="vertical-item">
+                    <h3>🏗️ Cement & Steel</h3>
+                    <p>Heavy industry networking</p>
+                </div>
+                <div class="vertical-item">
+                    <h3>💰 Financial Sector</h3>
+                    <p>Secure banking networks</p>
+                </div>
+                <div class="vertical-item">
+                    <h3>🚦 Traffic Monitoring</h3>
+                    <p>ITS and traffic management</p>
+                </div>
+                <div class="vertical-item">
+                    <h3>🏬 Commercial Sector</h3>
+                    <p>Business networking solutions</p>
+                </div>
+                <div class="vertical-item">
+                    <h3>🏛️ Government Sector</h3>
+                    <p>Public sector IT infrastructure</p>
+                </div>
+                <div class="vertical-item">
+                    <h3>🎓 Educational Institutes</h3>
+                    <p>Campus-wide networks</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Contact Page -->
+    <div class="page" id="contact">
+        <div class="page-content page-transition">
+            <h1 class="section-title">Get In Touch</h1>
+            
+            <div class="contact-grid">
+                <div class="contact-item">
+                    <h3>📧 Email</h3>
+                    <p>info@aadona.com</p>
+                    <p>support@aadona.com</p>
+                </div>
+                <div class="contact-item">
+                    <h3>📞 Phone</h3>
+                    <p>+91 98765 43210</p>
+                    <p>+91 87654 32109</p>
+                </div>
+                <div class="contact-item">
+                    <h3>📍 Head Office</h3>
+                    <p>AADONA Technologies</p>
+                    <p>Bangalore, Karnataka</p>
+                </div>
+                <div class="contact-item">
+                    <h3>🌐 Online</h3>
+                    <p>www.aadona.com</p>
+                    <p>Follow us on social media</p>
+                </div>
+            </div>
+
+            <div style="margin-top: 4rem; text-align: center;">
+                <h3 style="color: #4ecdc4; font-size: 2rem; margin-bottom: 2rem;">Ready to Transform Your Network?</h3>
+                <p style="font-size: 1.2rem; margin-bottom: 2rem;">Contact our experts for customized networking solutions tailored to your business needs.</p>
+                <button class="btn btn-primary" style="margin: 0 1rem;">Request Quote</button>
+                <button class="btn btn-secondary" style="margin: 0 1rem;">Schedule Demo</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Product Detail Modal -->
+    <div class="modal" id="productModal">
+        <div class="modal-content">
+            <button class="close-modal" onclick="closeModal()">&times;</button>
+            <div id="modalContent">
+                <!-- Content will be populated by JavaScript -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div style="margin-bottom: 2rem;">
+                <h3 style="color: #4ecdc4; font-size: 2rem; margin-bottom: 1rem;">AADONA</h3>
+                <p style="font-size: 1.1rem; opacity: 0.8;">Empowering businesses through innovative technology solutions</p>
+            </div>
+            
+            <div class="contact-grid">
+                <div class="contact-item">
+                    <h4>Company</h4>
+                    <p>About Us</p>
+                    <p>Our Mission</p>
+                    <p>Certifications</p>
+                </div>
+                <div class="contact-item">
+                    <h4>Solutions</h4>
+                    <p>Active Solutions</p>
+                    <p>Passive Solutions</p>
+                    <p>Custom Projects</p>
+                </div>
+                <div class="contact-item">
+                    <h4>Industries</h4>
+                    <p>Enterprise</p>
+                    <p>Government</p>
+                    <p>Education</p>
+                </div>
+                <div class="contact-item">
+                    <h4>Support</h4>
+                    <p>Technical Support</p>
+                    <p>Documentation</p>
+                    <p>Training</p>
+                </div>
+            </div>
+            
+            <div style="border-top: 1px solid rgba(255, 255, 255, 0.1); padding-top: 2rem; margin-top: 2rem;">
+                <p>&copy; 2018-2025 AADONA® Registered Trademark, All Rights Reserved</p>
+                <p style="margin-top: 0.5rem; opacity: 0.7;">Made in India | Truly Indian Brand for Bharat</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Product details data
+        const productDetails = {
+            wireless: {
+                title: "APOLLO Wireless Solutions",
+                description: "Enterprise-grade wireless networking solutions designed for modern business environments",
+                features: [
+                    "WiFi 6 (802.11ax) technology for maximum performance",
+                    "Advanced beamforming and MU-MIMO",
+                    "Seamless roaming across access points",
+                    "WPA3 security with enterprise authentication",
+                    "Cloud-based centralized management",
+                    "PoE+ powered for easy installation",
+                    "Outdoor and indoor models available",
+                    "Scalable from small office to enterprise campus"
+                ],
+                applications: ["Corporate Offices", "Educational Institutions", "Healthcare Facilities", "Hospitality Venues"],
+                specs: {
+                    "Data Rate": "Up to 1.2 Gbps",
+                    "Coverage": "Up to 5000 sq ft",
+                    "Users": "Up to 250 concurrent",
+                    "Power": "PoE+ (25W)"
+                }
+            },
+            switches: {
+                title: "Network Switches Portfolio",
+                description: "Comprehensive range of managed and unmanaged switches for every networking need",
+                features: [
+                    "Layer 2/3 switching with advanced features",
+                    "PoE/PoE+ ports for device power",
+                    "VLAN support for network segmentation",
+                    "QoS for traffic prioritization",
+                    "SNMP management and monitoring",
+                    "Redundant power options",
+                    "Stackable configurations",
+                    "Web-based management interface"
+                ],
+                applications: ["Data Centers", "Enterprise Networks", "Campus Backbone", "Industrial Automation"],
+                specs: {
+                    "Ports": "8 to 48 ports",
+                    "Speed": "Gigabit to 10G",
+                    "PoE Budget": "Up to 740W",
+                    "Switching Capacity": "Up to 336 Gbps"
+                }
+            },
+            firewall: {
+                title: "Advanced Firewall & UTM",
+                description: "Next-generation security appliances providing comprehensive network protection",
+                features: [
+                    "Next-generation firewall with deep packet inspection",
+                    "Intrusion prevention and detection system",
+                    "VPN gateway with IPSec and SSL support",
+                    "Web filtering and application control",
+                    "Anti-malware and anti-virus protection",
+                    "Load balancing and failover",
+                    "Centralized security management",
+                    "Real-time threat intelligence"
+                ],
+                applications: ["Enterprise Security", "Branch Office Protection", "Data Center Security", "Remote Access"],
+                specs: {
+                    "Throughput": "Up to 10 Gbps",
+                    "VPN Tunnels": "Up to 1000",
+                    "Concurrent Sessions": "Up to 500K",
+                    "Management": "Web GUI, CLI, SNMP"
+                }
+            },
+            servers: {
+                title: "Servers & Workstations",
+                description: "High-performance computing solutions for enterprise applications and virtualization",
+                features: [
+                    "Intel Xeon and AMD EPYC processors",
+                    "DDR4/DDR5 ECC memory support",
+                    "Hot-swappable drive bays",
+                    "Redundant power supplies",
+                    "Virtualization ready",
+                    "Remote management capabilities",
+                    "Tool-less chassis design",
+                    "Enterprise-grade warranties"
+                ],
+                applications: ["Virtualization", "Database Hosting", "File Servers", "Application Servers"],
+                specs: {
+                    "Processors": "Up to 2x Intel Xeon",
+                    "Memory": "Up to 1TB DDR4",
+                    "Storage": "Up to 24x 2.5\" drives",
+                    "Form Factor": "1U, 2U Rack, Tower"
+                }
+            },
+            nas: {
+                title: "Network Attached Storage",
+                description: "Scalable storage solutions for data backup, sharing, and management",
+                features: [
+                    "RAID 0, 1, 5, 6, 10 configurations",
+                    "Remote access and file sharing",
+                    "Automated backup scheduling",
+                    "Multi-user access control",
+                    "Cloud sync capabilities",
+                    "Media streaming server",
+                    "Surveillance station support",
+                    "Mobile app management"
+                ],
+                applications: ["File Sharing", "Data Backup", "Media Storage", "Surveillance Recording"],
+                specs: {
+                    "Bays": "2 to 16 drive bays",
+                    "Capacity": "Up to 256TB",
+                    "Connectivity": "Gigabit Ethernet",
+                    "Users": "Up to 500 concurrent"
+                }
+            },
+            industrial: {
+                title: "Industrial Ethernet Switches",
+                description: "Ruggedized networking equipment designed for harsh industrial environments",
+                features: [
+                    "Extended temperature range (-40°C to +75°C)",
+                    "DIN rail and wall mounting options",
+                    "Industrial protocol support",
+                    "Redundant ring topology",
+                    "Surge protection",
+                    "IP40 rated enclosures",
+                    "24/48VDC power input",
+                    "EMC compliance"
+                ],
+                applications: ["Factory Automation", "Power Utilities", "Transportation", "Oil & Gas"],
+                specs: {
+                    "Temperature": "-40°C to +75°C",
+                    "Ports": "5 to 28 ports",
+                    "Power": "24/48VDC",
+                    "Certification": "CE, FCC, UL"
+                }
+            },
+            cabling: {
+                title: "Structured Cabling Systems",
+                description: "High-performance copper and fiber cabling infrastructure",
+                features: [
+                    "Category 6/6A UTP and STP cables",
+                    "Single and multi-mode fiber options",
+                    "LSZH (Low Smoke Zero Halogen) jackets",
+                    "Outdoor and indoor rated options",
+                    "Custom cable assemblies",
+                    "Bulk cable reels available",
+                    "Compliance with TIA/EIA standards",
+                    "25-year system warranty"
+                ],
+                applications: ["Data Centers", "Campus Networks", "Building Infrastructure", "Industrial Installations"],
+                specs: {
+                    "Bandwidth": "Up to 10 Gbps",
+                    "Length": "Up to 100m (copper)",
+                    "Certification": "TIA/EIA compliant",
+                    "Warranty": "25 years"
+                }
+            },
+            racks: {
+                title: "Network Racks & Enclosures",
+                description: "Professional server racks and network enclosures for organized infrastructure",
+                features: [
+                    "19-inch standard rack compatibility",
+                    "Adjustable mounting rails",
+                    "Perforated doors for ventilation",
+                    "Cable management accessories",
+                    "Lockable front and rear doors",
+                    "Grounding and bonding provisions",
+                    "Modular accessory system",
+                    "Seismic and earthquake rated options"
+                ],
+                applications: ["Server Rooms", "Data Centers", "Telecommunications", "Network Closets"],
+                specs: {
+                    "Height": "6U to 47U",
+                    "Depth": "600mm to 1200mm",
+                    "Load Capacity": "Up to 1500kg",
+                    "Material": "Cold-rolled steel"
+                }
+            }
+        };
+
+        // Page navigation
+        function showPage(pageId) {
+            // Hide all pages
+            document.querySelectorAll('.page').forEach(page => {
+                page.classList.remove('active');
+            });
+            
+            // Show selected page
+            const targetPage = document.getElementById(pageId);
+            if (targetPage) {
+                targetPage.classList.add('active');
+                
+                // Add loaded class to page transition element if it exists
+                const pageTransition = targetPage.querySelector('.page-transition');
+                if (pageTransition) {
+                    pageTransition.classList.add('loaded');
+                }
+                
+                // Scroll to top
+                window.scrollTo({top: 0, behavior: 'smooth'});
+                
+                // Close mobile menu if open
+                const navLinks = document.getElementById('navLinks');
+                if (navLinks) {
+                    navLinks.classList.remove('active');
+                }
+            }
+        }
+
+        // Mobile menu toggle
+        function toggleMobileMenu() {
+            const navLinks = document.getElementById('navLinks');
+            if (navLinks) {
+                navLinks.classList.toggle('active');
+            }
+        }
+
+        // Product modal functions
+        function openProductModal(productKey) {
+            const product = productDetails[productKey];
+            if (!product) return;
+            
+            const modalContent = document.getElementById('modalContent');
+            modalContent.innerHTML = `
+                <div style="text-align: center; margin-bottom: 2rem;">
+                    <h2 style="color: #4ecdc4; font-size: 2.5rem; margin-bottom: 1rem;">${product.title}</h2>
+                    <p style="font-size: 1.2rem; opacity: 0.9;">${product.description}</p>
+                </div>
+                
+                <div style="margin-bottom: 2rem;">
+                    <h3 style="color: #ff6b6b; font-size: 1.8rem; margin-bottom: 1rem;">Key Features</h3>
+                    <ul style="list-style: none;">
+                        ${product.features.map(feature => `<li style="padding: 0.5rem 0; border-bottom: 1px solid rgba(255,255,255,0.1); position: relative; padding-left: 1.5rem;"><span style="position: absolute; left: 0; color: #4ecdc4;">✓</span>${feature}</li>`).join('')}
+                    </ul>
+                </div>
+                
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-bottom: 2rem;">
+                    <div>
+                        <h3 style="color: #ff6b6b; font-size: 1.5rem; margin-bottom: 1rem;">Applications</h3>
+                        <ul style="list-style: none;">
+                            ${product.applications.map(app => `<li style="padding: 0.3rem 0; color: #4ecdc4;">• ${app}</li>`).join('')}
+                        </ul>
+                    </div>
+                    <div>
+                        <h3 style="color: #ff6b6b; font-size: 1.5rem; margin-bottom: 1rem;">Specifications</h3>
+                        ${Object.entries(product.specs).map(([key, value]) => `<p style="padding: 0.3rem 0; border-bottom: 1px solid rgba(255,255,255,0.1);"><strong>${key}:</strong> ${value}</p>`).join('')}
+                    </div>
+                </div>
+                
+                <div style="text-align: center;">
+                    <button class="btn btn-primary" onclick="closeModal()">Request Quote</button>
+                    <button class="btn btn-secondary" onclick="closeModal()" style="margin-left: 1rem;">Download Datasheet</button>
+                </div>
+            `;
+            
+            document.getElementById('productModal').style.display = 'block';
+        }
+
+        function closeModal() {
+            document.getElementById('productModal').style.display = 'none';
+        }
+
+        // Background effects
+        function createParticles() {
+            const bgAnimation = document.querySelector('.bg-animation');
+            
+            // Create floating particles
+            for (let i = 0; i < 30; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.width = Math.random() * 4 + 2 + 'px';
+                particle.style.height = particle.style.width;
+                particle.style.animationDelay = Math.random() * 8 + 's';
+                particle.style.animationDuration = (Math.random() * 10 + 8) + 's';
+                bgAnimation.appendChild(particle);
+            }
+            
+            // Create geometric shapes
+            for (let i = 0; i < 5; i++) {
+                const shape = document.createElement('div');
+                shape.className = 'geometric-shape';
+                const size = Math.random() * 100 + 50;
+                shape.style.width = size + 'px';
+                shape.style.height = size + 'px';
+                shape.style.left = Math.random() * 100 + '%';
+                shape.style.top = Math.random() * 100 + '%';
+                shape.style.animationDelay = Math.random() * 5 + 's';
+                shape.style.animationDuration = (Math.random() * 15 + 10) + 's';
+                bgAnimation.appendChild(shape);
+            }
+        }
+
+        // Counter animation
+        function animateCounters() {
+            const counters = document.querySelectorAll('.stat-number');
+            
+            counters.forEach(counter => {
+                const target = parseInt(counter.getAttribute('data-target'));
+                const increment = target / 100;
+                let current = 0;
+                
+                const updateCounter = () => {
+                    if (current < target) {
+                        current += increment;
+                        counter.textContent = Math.ceil(current) + '+';
+                        requestAnimationFrame(updateCounter);
+                    } else {
+                        counter.textContent = target + '+';
+                    }
+                };
+                
+                updateCounter();
+            });
+        }
+
+        // Header scroll effect
+        function initHeaderScroll() {
+            const header = document.querySelector('header');
+            
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 100) {
+                    header.style.background = 'rgba(15, 15, 35, 0.98)';
+                    header.style.boxShadow = '0 5px 20px rgba(0, 0, 0, 0.3)';
+                } else {
+                    header.style.background = 'rgba(15, 15, 35, 0.95)';
+                    header.style.boxShadow = 'none';
+                }
+            });
+        }
+
+        // Interactive effects
+        function initInteractiveEffects() {
+            // Logo hover effect
+            const logo = document.querySelector('.logo');
+            logo.addEventListener('mouseenter', () => {
+                logo.style.transform = 'scale(1.1) rotate(5deg)';
+            });
+            logo.addEventListener('mouseleave', () => {
+                logo.style.transform = 'scale(1) rotate(0deg)';
+            });
+
+            // Card hover effects
+            const cards = document.querySelectorAll('.product-card, .vertical-item, .cert-item');
+            cards.forEach(card => {
+                card.addEventListener('mouseenter', function() {
+                    this.style.transform = 'translateY(-10px) scale(1.02)';
+                });
+                card.addEventListener('mouseleave', function() {
+                    this.style.transform = 'translateY(0) scale(1)';
+                });
+            });
+
+            // Button ripple effect
+            const buttons = document.querySelectorAll('.btn');
+            buttons.forEach(button => {
+                button.addEventListener('click', function(e) {
+                    const ripple = document.createElement('span');
+                    const rect = this.getBoundingClientRect();
+                    const size = Math.max(rect.width, rect.height);
+                    const x = e.clientX - rect.left - size / 2;
+                    const y = e.clientY - rect.top - size / 2;
+                    
+                    ripple.style.width = ripple.style.height = size + 'px';
+                    ripple.style.left = x + 'px';
+                    ripple.style.top = y + 'px';
+                    ripple.style.position = 'absolute';
+                    ripple.style.background = 'rgba(255, 255, 255, 0.5)';
+                    ripple.style.borderRadius = '50%';
+                    ripple.style.transform = 'scale(0)';
+                    ripple.style.animation = 'ripple 0.6s linear';
+                    ripple.style.pointerEvents = 'none';
+                    
+                    this.appendChild(ripple);
+                    
+                    setTimeout(() => {
+                        ripple.remove();
+                    }, 600);
+                });
+            });
+        }
+
+        // Dynamic background color
+        function initDynamicBackground() {
+            window.addEventListener('scroll', () => {
+                const scrollPercent = window.scrollY / (document.documentElement.scrollHeight - window.innerHeight);
+                const hue = 240 + (scrollPercent * 60);
+                document.body.style.background = `linear-gradient(135deg, hsl(${hue}, 70%, 15%) 0%, hsl(${hue + 20}, 60%, 25%) 50%, hsl(${hue + 40}, 50%, 35%) 100%)`;
+            });
+        }
+
+        // Handle browser back/forward - Removed due to security restrictions
+        // window.addEventListener('popstate', (e) => {
+        //     const page = e.state?.page || 'home';
+        //     showPage(page);
+        // });
+
+        // Modal close on outside click
+        document.addEventListener('click', (e) => {
+            const modal = document.getElementById('productModal');
+            if (modal && e.target === modal) {
+                closeModal();
+            }
+        });
+
+        // ESC key to close modal
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                closeModal();
+            }
+        });
+
+        // Initialize everything
+        document.addEventListener('DOMContentLoaded', () => {
+            createParticles();
+            animateCounters();
+            initHeaderScroll();
+            initInteractiveEffects();
+            initDynamicBackground();
+            
+            // Add initial page transition
+            setTimeout(() => {
+                document.querySelectorAll('.page-transition').forEach(el => {
+                    el.classList.add('loaded');
+                });
+            }, 100);
+        });
+
+        // Add CSS for ripple animation
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes ripple {
+                to {
+                    transform: scale(4);
+                    opacity: 0;
+                }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>
