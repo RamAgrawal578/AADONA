@@ -34,7 +34,6 @@
   <script src="https://unpkg.com/grapesjs"></script>
 
   <script>
-    // 🔹 Firebase Config (apna project ka config paste karna)
     const firebaseConfig = {
       apiKey: "AIzaSyB9VthrW6LUkLs5YpV_bypHklfUtu2BJbE",
       authDomain: "aadonasite.firebaseapp.com",
@@ -48,10 +47,8 @@
     firebase.initializeApp(firebaseConfig);
     const auth = firebase.auth();
     const db = firebase.firestore();
-
     let editor;
 
-    // 🔹 Login Function
     function login() {
       const email = document.getElementById('email').value;
       const password = document.getElementById('password').value;
@@ -65,39 +62,53 @@
         .catch(err => alert(err.message));
     }
 
-    // 🔹 Start GrapesJS Editor
     async function bootEditor() {
       editor = grapesjs.init({
         container: '#editor',
         height: '100%',
-        storageManager: false,
+        storageManager: false, 
         canvas: {
-          styles: [ '/style.css' ],   // agar CSS file hai to link kar
-          scripts: [ '/script.js' ]   // agar JS file hai to link kar
+          scripts: ['/script.js'],
+          styles: ['/style.css']
         }
       });
 
-      // Try to load saved content from Firestore
-      const snap = await db.collection("pages").doc("home").get();
-      if (snap.exists) {
-        const data = snap.data();
-        if (data.html) editor.setComponents(data.html);
-        if (data.css)  editor.setStyle(data.css);
-      } else {
-        // Agar Firestore khali hai → index.html load karo
-        const res = await fetch('/index.html');
-        const html = await res.text();
-        const bodyMatch = html.match(/<body[^>]*>([\s\S]*?)<\/body>/i);
-        if (bodyMatch) editor.setComponents(bodyMatch[1]);
+      try {
+        // 🔹 Firestore se content load karo
+        const snap = await db.collection("pages").doc("home").get();
+        if (snap.exists) {
+          const data = snap.data();
+          if (data.html) editor.setComponents(data.html);
+          if (data.css) editor.setStyle(data.css);
+        } else {
+          // 🔹 Agar Firestore empty → original website HTML load karo
+          try {
+            const res = await fetch('/index.html');
+            const htmlText = await res.text();
+            const bodyMatch = htmlText.match(/<body[^>]*>([\s\S]*?)<\/body>/i);
+            if (bodyMatch) {
+              editor.setComponents(bodyMatch[1]);
+            } else {
+              editor.setComponents('<h1>Welcome to AADONA Admin Panel</h1><p>Edit this content in GrapesJS!</p>');
+            }
+          } catch (e) {
+            editor.setComponents('<h1>Welcome to AADONA Admin Panel</h1><p>Edit this content in GrapesJS!</p>');
+          }
+        }
+      } catch (err) {
+        alert("Firestore load error: " + err.message);
       }
 
-      // Save Button → Firestore me save
-      document.getElementById('saveBtn').onclick = () => {
+      // 🔹 Save button
+      document.getElementById('saveBtn').onclick = async () => {
         const html = editor.getHtml();
         const css = editor.getCss();
-        db.collection("pages").doc("home").set({ html, css })
-          .then(() => alert("✅ Changes saved!"))
-          .catch(err => alert("❌ Error: " + err.message));
+        try {
+          await db.collection("pages").doc("home").set({ html, css });
+          alert("✅ Changes saved!");
+        } catch (err) {
+          alert("❌ Error: " + err.message);
+        }
       };
     }
   </script>
