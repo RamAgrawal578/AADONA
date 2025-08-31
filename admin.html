@@ -1,172 +1,103 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <title>AADONA Admin</title>
+  <meta charset="UTF-8">
+  <title>AADONA Admin Panel</title>
   <link href="https://unpkg.com/grapesjs/dist/css/grapes.min.css" rel="stylesheet"/>
   <style>
-    body, html { height: 100%; margin: 0; font-family: system-ui, Arial; }
-    header { display:flex; align-items:center; gap:12px; padding:10px 14px; border-bottom:1px solid #eee; }
-    #login { max-width: 360px; margin: 80px auto; padding: 24px; border: 1px solid #eee; border-radius: 12px; }
-    #gjs { height: calc(100vh - 56px); }
-    .hidden { display:none; }
+    body, html { margin:0; padding:0; height:100%; font-family: Arial, sans-serif; }
+    #loginPanel { text-align:center; margin-top:100px; }
+    #editorPanel { display:none; height:100%; }
+    #editor { height:90vh; border:1px solid #ccc; }
+    #saveBtn { padding:10px 20px; background:#4CAF50; color:white; border:none; cursor:pointer; margin:10px; }
   </style>
 </head>
 <body>
-  <header>
-    <strong>AADONA Admin</strong>
-    <span id="who" style="margin-left:auto; opacity:.7;"></span>
-    <button id="btnLogout" class="hidden">Logout</button>
-  </header>
-
-  <!-- Login panel -->
-  <div id="login">
-    <h3>Admin Login</h3>
-    <input id="email" type="email" placeholder="Email" style="width:100%;padding:10px;"><br><br>
-    <input id="password" type="password" placeholder="Password" style="width:100%;padding:10px;"><br><br>
-    <button id="btnLogin" style="width:100%;padding:10px;">Login</button>
-    <p style="opacity:.7;margin-top:8px;">Use the admin/staff email you added in Firebase Authentication.</p>
+  <!-- Login Form -->
+  <div id="loginPanel">
+    <h2>Admin Login</h2>
+    <input id="email" type="text" placeholder="Email"><br><br>
+    <input id="password" type="password" placeholder="Password"><br><br>
+    <button onclick="login()">Login</button>
   </div>
 
-  <!-- Editor panel -->
-  <div id="editor" class="hidden">
-    <div style="padding:8px 14px; border-bottom:1px solid #eee; display:flex; gap:8px;">
-      <input type="file" id="imgUpload" accept="image/*" multiple />
-      <button id="btnSave">💾 Save</button>
-      <span id="status" style="margin-left:auto; opacity:.7;"></span>
-    </div>
-    <div id="gjs"><!-- Seed content (first-time) -->
-      <section class="hero">
-        <h1>Welcome to AADONA</h1>
-        <p>Edit this text and drag in images. Use the Save button to publish.</p>
-        <img src="https://via.placeholder.com/900x400" alt="Hero">
-      </section>
-    </div>
+  <!-- Editor Panel -->
+  <div id="editorPanel">
+    <button id="saveBtn">💾 Save</button>
+    <div id="editor"></div>
   </div>
 
+  <!-- Firebase SDK -->
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
   <script src="https://unpkg.com/grapesjs"></script>
 
-  <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-    import {
-      getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut
-    } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
-    import {
-      getFirestore, doc, getDoc, setDoc
-    } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
-    import {
-      getStorage, ref, uploadBytes, getDownloadURL
-    } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-storage.js";
-
-    // 1) Your Firebase config (same as index.html)
+  <script>
+    // 🔹 Firebase Config (apna project ka config paste karna)
     const firebaseConfig = {
-  apiKey: "AIzaSyB9VthrW6LUkLs5YpV_bypHklfUtu2BJbE",
-  authDomain: "aadonasite.firebaseapp.com",
-  projectId: "aadonasite",
-  storageBucket: "aadonasite.firebasestorage.app",
-  messagingSenderId: "122190604725",
-  appId: "1:122190604725:web:c4b41d42f3933b38d651fc",
-  measurementId: "G-GGFSZE96B1"
-};
-    // 2) Init Firebase
-    const app     = initializeApp(firebaseConfig);
-    const auth    = getAuth(app);
-    const db      = getFirestore(app);
-    const storage = getStorage(app);
-
-    const loginEl  = document.getElementById('login');
-    const editorEl = document.getElementById('editor');
-    const whoEl    = document.getElementById('who');
-    const statusEl = document.getElementById('status');
-    const btnLogin = document.getElementById('btnLogin');
-    const btnLogout= document.getElementById('btnLogout');
-
-    let editor; // GrapesJS instance
-
-    // 3) Auth state
-    onAuthStateChanged(auth, async (user) => {
-      if (user) {
-        loginEl.classList.add('hidden');
-        editorEl.classList.remove('hidden');
-        btnLogout.classList.remove('hidden');
-        whoEl.textContent = user.email || '';
-        await bootEditor();
-      } else {
-        loginEl.classList.remove('hidden');
-        editorEl.classList.add('hidden');
-        btnLogout.classList.add('hidden');
-        whoEl.textContent = '';
-        if (editor) editor.destroy();
-      }
-    });
-
-    // 4) Login / Logout
-    btnLogin.onclick = async () => {
-      const email = (document.getElementById('email').value || '').trim();
-      const pass  = (document.getElementById('password').value || '').trim();
-      try {
-        await signInWithEmailAndPassword(auth, email, pass);
-      } catch (e) { alert(e.message); }
+      apiKey: "AIzaSyB9VthrW6LUkLs5YpV_bypHklfUtu2BJbE",
+      authDomain: "aadonasite.firebaseapp.com",
+      projectId: "aadonasite",
+      storageBucket: "aadonasite.firebasestorage.app",
+      messagingSenderId: "122190604725",
+      appId: "1:122190604725:web:c4b41d42f3933b38d651fc",
+      measurementId: "G-GGFSZE96B1"
     };
-    btnLogout.onclick = async () => { await signOut(auth); };
 
-    // 5) Boot GrapesJS + load saved page if exists
+    firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+    const db = firebase.firestore();
+
+    let editor;
+
+    // 🔹 Login Function
+    function login() {
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
+
+      auth.signInWithEmailAndPassword(email, password)
+        .then(() => {
+          document.getElementById('loginPanel').style.display = 'none';
+          document.getElementById('editorPanel').style.display = 'block';
+          bootEditor();
+        })
+        .catch(err => alert(err.message));
+    }
+
+    // 🔹 Start GrapesJS Editor
     async function bootEditor() {
       editor = grapesjs.init({
-        container: '#gjs',
-        fromElement: true,
+        container: '#editor',
         height: '100%',
-        storageManager: { type: null } // we control saving manually
+        storageManager: false,
+        canvas: {
+          styles: [ '/style.css' ],   // agar CSS file hai to link kar
+          scripts: [ '/script.js' ]   // agar JS file hai to link kar
+        }
       });
 
-      // Add simple blocks
-      editor.BlockManager.add('text',  { label:'Text',  content:'<p>Text</p>' });
-      editor.BlockManager.add('image', { label:'Image', content:'<img src="https://via.placeholder.com/600x300"/>' });
-
-      // Load saved content
-      try {
-        const snap = await getDoc(doc(db, "pages", "home"));
-        if (snap.exists()) {
-          const data = snap.data();
-          if (data.html) editor.setComponents(data.html);
-          if (data.css)  editor.setStyle(data.css);
-        }
-      } catch (e) {
-        console.warn("No saved page yet or error loading:", e);
+      // Try to load saved content from Firestore
+      const snap = await db.collection("pages").doc("home").get();
+      if (snap.exists) {
+        const data = snap.data();
+        if (data.html) editor.setComponents(data.html);
+        if (data.css)  editor.setStyle(data.css);
+      } else {
+        // Agar Firestore khali hai → index.html load karo
+        const res = await fetch('/index.html');
+        const html = await res.text();
+        const bodyMatch = html.match(/<body[^>]*>([\s\S]*?)<\/body>/i);
+        if (bodyMatch) editor.setComponents(bodyMatch[1]);
       }
 
-      // Image uploads → add to Assets so you can drag them in
-      const imgInput = document.getElementById('imgUpload');
-      imgInput.onchange = async (e) => {
-        const files = Array.from(e.target.files || []);
-        if (!files.length) return;
-        statusEl.textContent = "Uploading images…";
-        const urls = [];
-        for (const file of files) {
-          const p = `uploads/${Date.now()}-${Math.random().toString(36).slice(2)}-${file.name}`;
-          const r = ref(storage, p);
-          await uploadBytes(r, file);
-          const url = await getDownloadURL(r);
-          urls.push(url);
-          // Push into GrapesJS Asset Manager
-          editor.AssetManager.add([{ src: url }]);
-        }
-        statusEl.textContent = `Uploaded ${urls.length} image(s).`;
-        imgInput.value = "";
-      };
-
-      // Save button
-      document.getElementById('btnSave').onclick = async () => {
+      // Save Button → Firestore me save
+      document.getElementById('saveBtn').onclick = () => {
         const html = editor.getHtml();
-        const css  = editor.getCss();
-        statusEl.textContent = "Saving…";
-        try {
-          await setDoc(doc(db, "pages", "home"), { html, css, updatedAt: Date.now() });
-          statusEl.textContent = "Saved ✔";
-        } catch (e) {
-          statusEl.textContent = "Save failed";
-          alert(e.message);
-        }
+        const css = editor.getCss();
+        db.collection("pages").doc("home").set({ html, css })
+          .then(() => alert("✅ Changes saved!"))
+          .catch(err => alert("❌ Error: " + err.message));
       };
     }
   </script>
