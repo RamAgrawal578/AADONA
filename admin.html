@@ -67,10 +67,7 @@
         container: '#editor',
         height: '100%',
         storageManager: false, 
-        canvas: {
-          scripts: ['/script.js'],
-          styles: ['/style.css']
-        }
+        canvas: { styles: ['/style.css'], scripts: ['/script.js'] }
       });
 
       try {
@@ -81,19 +78,26 @@
           if (data.html) editor.setComponents(data.html);
           if (data.css) editor.setStyle(data.css);
         } else {
-          // 🔹 Agar Firestore empty → original website HTML load karo
-          try {
-            const res = await fetch('/index.html');
-            const htmlText = await res.text();
-            const bodyMatch = htmlText.match(/<body[^>]*>([\s\S]*?)<\/body>/i);
-            if (bodyMatch) {
-              editor.setComponents(bodyMatch[1]);
-            } else {
-              editor.setComponents('<h1>Welcome to AADONA Admin Panel</h1><p>Edit this content in GrapesJS!</p>');
-            }
-          } catch (e) {
-            editor.setComponents('<h1>Welcome to AADONA Admin Panel</h1><p>Edit this content in GrapesJS!</p>');
-          }
+          // 🔹 Agar Firestore empty → live website HTML ko copy kar do editor me
+          // Yeh live HTML content manually paste karo yahan:
+          const liveHtml = `
+            <header>
+              <h1>Welcome to AADONA</h1>
+            </header>
+            <section>
+              <p>Edit this content directly!</p>
+              <img src="https://aadona.vercel.app/images/sample.jpg" alt="sample"/>
+            </section>
+          `;
+          editor.setComponents(liveHtml);
+
+          // Optional: agar CSS chahiye to yahan set karo
+          const liveCss = `
+            body { font-family: Arial, sans-serif; }
+            header { background:#333; color:#fff; padding:20px; text-align:center; }
+            section { padding:20px; }
+          `;
+          editor.setStyle(liveCss);
         }
       } catch (err) {
         alert("Firestore load error: " + err.message);
