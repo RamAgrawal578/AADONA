@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>AADONA Editor</title>
+  <!-- GrapesJS CSS -->
+  <link href="https://unpkg.com/grapesjs/dist/css/grapes.min.css" rel="stylesheet"/>
+  <style>
+    body, html { height: 100%; margin: 0; }
+    #gjs { height: 100%; }
+  </style>
+</head>
+<body>
+  <!-- This is the editable canvas -->
+  <div id="gjs">
+    <h1>AADONA Website</h1>
+    <p>Welcome! Drag and drop blocks from the panel.</p>
+    <img src="https://via.placeholder.com/400x200" />
+  </div>
+
+  <!-- GrapesJS JS -->
+  <script src="https://unpkg.com/grapesjs"></script>
+  <script>
+    const editor = grapesjs.init({
+      container: '#gjs',
+      fromElement: true,
+      height: '100%',
+      storageManager: { type: null } // disables saving for now
+    });
+
+    // Add some drag-and-drop blocks
+    editor.BlockManager.add('text-block', {
+      label: 'Text',
+      content: '<p>Edit me!</p>'
+    });
+
+    editor.BlockManager.add('image-block', {
+      label: 'Image',
+      content: '<img src="https://via.placeholder.com/150"/>'
+    });
+  </script>
+</body>
+</html>
